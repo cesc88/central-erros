@@ -1,0 +1,51 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+  displayName: "Instalando Nuget"
+
+- task: NuGetCommand@2
+  displayName: "Executando Nuget"
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  displayName: "Compilando o sistema"
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+
+- task: DotNetCoreCLI@2
+  displayName: "Gerando os pacotes para publicacao Azure"
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Free Trial(3ded55be-849c-482b-8b73-ea81097ff28c)'
+    appType: 'webApp'
+    WebAppName: 'centralerros'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    JSONFiles: |
+      **/*.json
+      **/appsettings.json
