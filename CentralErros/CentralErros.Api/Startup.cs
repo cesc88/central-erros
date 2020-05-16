@@ -39,22 +39,6 @@ namespace CentralErros.Api
                 .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling =
                 Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            /*services.AddScoped(typeof(IRepositorioBase<>), typeof(RepositorioBase<>));
-            services.AddScoped<IAplicacaoRepositorio, AplicacaoRepositorio>();
-            services.AddScoped<IAvisoRepositorio, AvisoRepositorio>();
-            services.AddScoped<ILogRepositorio, LogRepositorio>();
-            services.AddScoped<ITipoLogRepositorio, TipoLogRepositorio>();
-            services.AddScoped<IUsuarioAplicacaoRepositorio, UsuarioAplicacaoRepositorio>();
-            services.AddScoped<IUsuarioAvisoRepositorio, UsuarioAvisoRepositorio>();
-            services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
-
-            services.AddScoped<IAplicacaoAplicacao, AplicacaoAplicacao>();
-            services.AddScoped<IAvisoAplicacao, AvisoAplicacao>();
-            services.AddScoped<ILogAplicacao, LogAplicacao>();
-            services.AddScoped<ITipoLogAplicacao, TipoLogAplicacao>();            
-            services.AddScoped<IUsuarioAplicacaoAplicacao, UsuarioAplicacaoAplicacao>();
-            services.AddScoped<IUsuarioAvisoAplicacao, UsuarioAvisoAplicacao>();
-            services.AddScoped<IUsuarioAplicacao, Application.App.UsuarioAplicacao>();*/
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
 
@@ -86,12 +70,6 @@ namespace CentralErros.Api
                     }
                 });
             });
-
-            services.AddDbContext<Contexto>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("MinhaConexao")));
-
-            services.AddIdentity<Usuario, IdentityRole>()
-                .AddEntityFrameworkStores<Contexto>();
 
             var section = Configuration.GetSection("Token");
             services.Configure<Token>(section);

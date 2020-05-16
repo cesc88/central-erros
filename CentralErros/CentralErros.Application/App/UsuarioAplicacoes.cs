@@ -16,13 +16,13 @@ using System.Threading.Tasks;
 
 namespace CentralErros.Application.App
 {
-    public class UsuarioAplicacao : IUsuarioAplicacao
+    public class UsuarioAplicacoes : IUsuarioAplicacao
     {
         private readonly IUsuarioRepositorio _repo;
         private readonly IMapper _mapper;
         private readonly Token _token;
 
-        public UsuarioAplicacao(IUsuarioRepositorio repo, IMapper mapper, IOptions<Token> token)
+        public UsuarioAplicacoes(IUsuarioRepositorio repo, IMapper mapper, IOptions<Token> token)
         {
             _repo = repo;
             _mapper = mapper;

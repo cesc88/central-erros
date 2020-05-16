@@ -2,7 +2,9 @@
 using CentralErros.Application.Interface;
 using CentralErros.Data;
 using CentralErros.Data.Repositorio;
+using CentralErros.Domain.Modelo;
 using CentralErros.Domain.Repositorio;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,10 +30,14 @@ namespace CentralErros.Infra.Ioc
             services.AddScoped<ITipoLogAplicacao, TipoLogAplicacao>();
             services.AddScoped<IUsuarioAplicacaoAplicacao, UsuarioAplicacaoAplicacao>();
             services.AddScoped<IUsuarioAvisoAplicacao, UsuarioAvisoAplicacao>();
-            services.AddScoped<IUsuarioAplicacao, UsuarioAplicacao>();
+            services.AddScoped<IUsuarioAplicacao, UsuarioAplicacoes>();
 
             services.AddDbContext<Contexto>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("LuisDB")));
+                options.UseSqlServer(configuration.GetConnectionString("MyConnection")));
+
+            services.AddIdentity<Usuario, IdentityRole>()
+                .AddEntityFrameworkStores<Contexto>();
+
         }
     }
 }
