@@ -45,7 +45,7 @@ steps:
     azureSubscription: 'Free Trial(3ded55be-849c-482b-8b73-ea81097ff28c)'
     appType: 'webApp'
     WebAppName: 'centralerros'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    package: $(System.DefaultWorkingDirectory)/**/*.zip
     JSONFiles: |
       **/*.json
       **/appsettings.json
