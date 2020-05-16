@@ -37,7 +37,6 @@ namespace CentralErros.Infra.Ioc
 
             services.AddIdentity<Usuario, IdentityRole>()
                 .AddEntityFrameworkStores<Contexto>();
-
         }
     }
 }
